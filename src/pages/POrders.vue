@@ -1,5 +1,5 @@
 <template>
-    <div class="orders">
+    <div class="porders">
         <div class="container">
             <table class="table table-bordered">
                 <thead>
@@ -11,13 +11,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(o, idx1) in state.orders" :key="idx1">
-                    <td>{{ state.orders.length - idx1 }}</td>
+                <tr v-for="(o, idx1) in state.porders" :key="idx1">
+                    <td>{{ state.porders.length - idx1 }}</td>
                     <td>{{ o.name }}</td>
                     <td>{{ o.address }}</td>
                     <td>{{ o.payment }}</td>
                     <td>
-                        <div v-for="(i, idx2) in o.items" :key="idx2">{{i.name}}</div>
+                        <div v-for="(i, idx2) in o.pitems" :key="idx2">{{i.name}}</div>
                     </td>
                 </tr>
                 </tbody>
@@ -34,17 +34,17 @@ import lib from "@/scripts/lib";
 export default {
     setup() {
         const state = reactive({
-            orders: [],
+            porders: [],
         })
 
-        axios.get("/api/orders").then(({data})=>{
-            state.orders = [];
+        axios.get("/api/porders").then(({data})=>{
+            state.porders = [];
 
             for(let d of data){
-                if(d.items) {
-                    d.items = JSON.parse(d.items);
+                if(d.pitems) {
+                    d.pitems = JSON.parse(d.pitems);
                 }
-                state.orders.push(d);
+                state.porders.push(d);
             }
         })
 
@@ -56,7 +56,6 @@ export default {
 .table {
     margin-top: 30px;
 }
-
 .table > tbody {
     border-top: 1px solid #eee;
 }

@@ -9,12 +9,15 @@
                             <li>
                                 <router-link to="/" class="text-white">메인 화면</router-link>
                             </li>
+                            <li>
+                                <router-link to="/phome" class="text-white">포인트 상점</router-link>
+                            </li>
 
                             <li v-if="$store.state.account.id">
                                 <router-link to="/orders" class="text-white">주문 내역</router-link>
                             </li>
                             <li>
-                                <router-link to="/board" class="text-white">게시판</router-link>
+                                <router-link to="/createAccount" class="text-white">회원 가입</router-link>
                             </li>
                             <li>
                                 <router-link to="/login" class="text-white" v-if="!$store.state.account.id">로그인
@@ -35,11 +38,15 @@
                         <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                         <circle cx="12" cy="13" r="4"/>
                     </svg>
-                    <strong>Gallery</strong>
+                    <strong>It봉사 웹사이트</strong>
+                </router-link>
+                <router-link to="/pcart" class="cart btn" v-if="$store.state.account.id">
+                    <i class="fa fa-shopping-cart" ></i>
                 </router-link>
                 <router-link to="/cart" class="cart btn" v-if="$store.state.account.id">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <i class="fas fa-shopping-cart">></i>
                 </router-link>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                         aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -74,6 +81,11 @@ header ul li a{
 }
 header .navbar .cart{
     margin-left: auto;
+    color:#fff;}
+
+header .navbar .cart{
+    margin-left: auto;
     color:#fff;
+
 }
 </style>

@@ -1,16 +1,22 @@
 <template>
     <div class="card shadow-sm">
-        <span class="img" :style="{backgroundImage:`url(${item.imgPath})`}"/>
+        <span class="img" :style="{backgroundImage:`url(${item.img_Path})`}"/>
         <div class="card-body">
             <p class="card-text">
                 <span>{{ item.name }} &nbsp;</span>
+
                 <span class="discount badge bg-danger">
                     {{ item.discountPer }}%
                 </span>
             </p>
             <div class="d-flex justify-content-between align-items-center">
-                <button class="btn btn-primary" @click="addToCart(item.id)">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <button class="btn btn-danger " @click="addToCart(item.id)">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+
+                <button class="btn btn-success" @click="load(item.id)">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <router-link :to="{ path: '/Inform' }" class="text-white">상세 페이지</router-link>
                 </button>
                 <small class="price text-muted">
                     {{ lib.getNumberFormatted(item.price)}}원
@@ -33,13 +39,13 @@ export default {
     props:{
         item: Object
     },
-    setup(){
-        const addToCart = (itemId)=>{
-            axios.post(`/api/cart/items/${itemId}`).then(()=>{
+    setup() {
+        const addToCart = (itemId) => {
+            axios.post(`/api/cart/items/${itemId}`).then(() => {
                 console.log('success')
+                //window.alert("관심목록에 추가되었습니다")
             })
         };
-
         return {lib, addToCart}
     }
 }

@@ -1,20 +1,20 @@
 <template>
-    <div class="order">
+    <div class="porder">
         <div class="container">
             <main>
-                <div class="py-5 text-center"><h2>신청하기</h2>
+                <div class="py-5 text-center"><h2>구매하기</h2>
                  </div>
                 <div class="row g-5">
-                    <div class="col-md-5 col-lg-4 order-md-last"><h4
+                    <div class="col-md-5 col-lg-4 porder-md-last"><h4
                             class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-primary">신청 목록</span>
                         <span
                                 class="badge bg-primary rounded-pill">
-                            {{ state.items.length }}
+                            {{ state.pitems.length }}
                         </span></h4>
                         <ul class="list-group mb-3">
                             <li class="list-group-item d-flex justify-content-between lh-sm"
-                                v-for="(i, idx) in state.items" :key="idx">
+                                v-for="(i, idx) in state.pitems" :key="idx">
                                 <div>
                                     <h6 class="my-0">{{ i.name }}</h6>
                                 </div>
@@ -61,7 +61,7 @@
                             <input
                                 type="text" class="form-control" id="cc-name" v-model="state.form.cardNumber">
                             <hr class="my-4">
-                            <button class="w-100 btn btn-primary btn-lg" @click="submit()">신청 하기</button>
+                            <button class="w-100 btn btn-primary btn-lg" @click="submit()">구매 하기</button>
                         </div>
                     </div>
                 </div>
@@ -79,36 +79,36 @@ import router from "@/scripts/router";
 export default {
     setup() {
         const state = reactive({
-            items: [],
+            pitems: [],
             form: {
                 name: "",
                 address: "",
                 payment: "",
                 cardNumber: "",
-                items: "",
+                pitems: "",
             }
         })
 
         const load = () => {
-            axios.get("/api/cart/items").then(({data}) => {
+            axios.get("/api/pcart/pitems").then(({data}) => {
                 console.log(data);
-                state.items = data;
+                state.pitems = data;
             })
         };
 
         const submit = ()=>{
             const args = JSON.parse(JSON.stringify(state.form)) ;
-            args.items = JSON.stringify(state.items);
-            axios.post("/api/orders", args).then(()=>{
+            args.pitems = JSON.stringify(state.pitems);
+            axios.post("/api/porders", args).then(()=>{
                 alert('신청되었습니다.');
-                router.push({path:"/orders"})
+                router.push({path:"/porders"})
             })
         }
 
         const computedPrice = computed(() => {
             let result = 0;
 
-            for (let i of state.items) {
+            for (let i of state.pitems) {
                 result += i.price - i.price * i.discountPer / 100;
             }
             return result;

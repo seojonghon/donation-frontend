@@ -5,11 +5,12 @@
                 <li v-for="(i, idx) in state.items" :key="idx">
                     <img :src="i.imgPath"/>
                     <span class="name">{{i.name}}</span>
-                    <span class="price">{{ lib.getNumberFormatted(i.price - i.price * i.discountPer / 100)}}P</span>
-                    <i class="fa fa-trash" @click="remove(i.id)"></i>
+                    <span class="content">{{i.content}}</span>
+                    <button class="btn btn-primary" @click="remove(i.id)">뒤로 가기</button>
+                    <router-link to="/order" class="btn btn-primary">신청하기</router-link>
+<!--                    <router-link to="/">홈으로</router-link></button>-->
                 </li>
             </ul>
-            <router-link to="/order" class="btn btn-primary">신청하기</router-link>
         </div>
     </div>
 </template>
@@ -24,12 +25,14 @@ export default {
         const state = reactive({
             items:[]
         })
+
         const load = () => {
             axios.get("/api/cart/items").then(({data}) => {
                 console.log(data);
                 state.items = data;
             })
         }
+
         const remove = (itemId)=>{
             axios.delete(`/api/cart/items/${itemId}`).then(()=>{
                 load();
@@ -38,6 +41,7 @@ export default {
         load();
 
         return {state, lib, remove}
+
     }
 }
 

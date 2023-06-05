@@ -1,22 +1,24 @@
 <template>
     <div>
-        <input type="text" placeholder="글쓴이" v-model="writer" />
-        <input type="text" placeholder="제목" v-model="title"/>
-        <textarea name="" id="" cols="30" rows="10" placeholder="내용" v-model="content"></textarea>
-        <button @click="write">작성</button>
+        <input v-model="writer" placeholder="글쓴이"/>
+        <input v-model="title" placeholder="제목"/>
+        <textarea v-model="content" placeholder="내용"/>
+        <button @click="index !== undefined ? update() : write()">{{index !== undefined ? '수정' : '작성'}}</button>
     </div>
 </template>
-
 <script>
 import data from '@/data'
+
 export default {
     name: 'Create',
     data() {
+        const index = this.$route.params.contentId;
         return {
             data: data,
-            writer: "",
-            title: "",
-            content: ""
+            index: index,
+            writer: index !== undefined ? data[index].writer : "",
+            title: index !== undefined ? data[index].title : "",
+            content: index !== undefined ? data[index].content : ""
         }
     },
     methods: {
@@ -24,10 +26,18 @@ export default {
             this.data.push({
                 writer: this.writer,
                 title: this.title,
-                content: this.content
+                content: this.content,
             })
             this.$router.push({
-                path:"/"
+                path: '/read'
+            })
+        },
+        update() {
+            data[this.index].writer = this.writer
+            data[this.index].title = this.title
+            data[this.index].content = this.content
+            this.$router.push({
+                path: '/read'
             })
         }
     }
