@@ -13,19 +13,15 @@
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me" @keyup.enter="submit()"> Remember me
-            </label>
-        </div>
+            </label></div>
         <button class="w-100 btn btn-lg btn-primary" @click="submit()">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
-    </div>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022–2023</p></div>
 </template>
-
 <script>
 import {reactive} from "vue";
 import axios from "axios";
 import store from "@/scripts/store";
 import router from "@/scripts/router";
-
 export default {
     setup(){
         const state = reactive({
@@ -34,7 +30,6 @@ export default {
                 password:""
             }
         })
-
         const submit = ()=>{
             axios.post("/api/account/login", state.form).then((res)=>{
                 store.commit('setAccount', res.data);
@@ -46,7 +41,6 @@ export default {
                 window.alert("로그인정보가 존재하지 않습니다.");
             });
         }
-
         return {state, submit}
     }
 }

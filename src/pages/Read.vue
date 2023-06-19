@@ -1,44 +1,65 @@
 <template>
     <div>
-        <table>
+        <table class="table">
             <tr>
-                <td>글쓴이</td>
-                <td>제목</td>
-                <td>내용</td>
+                <th>글쓴이</th>
+                <th>제목</th>
+                <th>내용</th>
             </tr>
-            <tr :key="index" v-for="(value,index) in data" @click="detail(index)">
-                <td>{{value.writer}}</td>
-                <td>{{value.title}}</td>
-                <td>{{value.content}}</td>
+            <tr v-for="(value, index) in data" :key="index" @click="detail(index)">
+                <td>{{ value.writer }}</td>
+                <td>{{ value.title }}</td>
+                <td>{{ value.content }}</td>
             </tr>
         </table>
-        <button @click="write">글쓰기</button>
+        <button class="button" @click="write">글쓰기</button>
     </div>
 </template>
+
 <script>
-import data from '@/data'
+import data from '../data/index.js';
 
 export default {
     name: 'Read',
     data() {
         return {
-            data: data
-        }
+            data: data,
+        };
     },
     methods: {
         write() {
-            this.$router.push({
-                path: 'create'
-            })
+            this.$router.push({ path: 'create' });
         },
         detail(index) {
             this.$router.push({
                 name: 'Detail',
                 params: {
-                    contentId: index
-                }
-            })
-        }
-    }
-}
+                    contentId: index,
+                },
+            });
+        },
+    },
+};
 </script>
+
+<style>
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.button {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>

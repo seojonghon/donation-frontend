@@ -5,9 +5,18 @@
             <label htmlFor="title">ID:</label>
             <input type="text" id="title" v-model="board.email" required><br>
             <label htmlFor="content">PassWord:</label>
-            <textarea id="content" v-model="board.password" required></textarea><br>
-            <textarea id="good" v-model="board.good" required></textarea><br>
-            <button type="submit">가입 하기</button>
+            <input type="password" id="content" v-model="board.password" required><br>
+            <label htmlFor="good">선호 프로그래밍 언어:</label><br>
+            <label>
+                <input type="radio" v-model="board.good" value="JavaScript"> JavaScript
+            </label><br>
+            <label>
+                <input type="radio" v-model="board.good" value="Python"> Python
+            </label><br>
+            <label>
+                <input type="radio" v-model="board.good" value="Java"> Java
+            </label><br>
+            <button type="submit">가입하기</button>
         </form>
     </div>
 </template>
@@ -44,3 +53,36 @@ export default {
     }
 };
 </script>
+<style scoped>
+. signup-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+. form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+</style>

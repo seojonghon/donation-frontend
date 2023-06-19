@@ -1,12 +1,12 @@
 <template>
     <div class="card shadow-sm">
-        <span class="img" :style="{backgroundImage:`url(${item.img_Path})`}"/>
+        <span class="img" :style="{backgroundImage:`url(${item.imgPath})`}"/>
         <div class="card-body">
             <p class="card-text">
                 <span>{{ item.name }} &nbsp;</span>
 
                 <span class="discount badge bg-danger">
-                    {{ item.discountPer }}%
+                    {{ item.discountPer }}P
                 </span>
             </p>
             <div class="d-flex justify-content-between align-items-center">
@@ -14,16 +14,16 @@
                     <i class="fa fa-heart" aria-hidden="true"></i>
                 </button>
 
-                <button class="btn btn-success" @click="load(item.id)">
+                <button class="btn btn-success" @click="addToCart(item.id)">
                     <i class="fa fa-globe" aria-hidden="true"></i>
                     <router-link :to="{ path: '/Inform' }" class="text-white">상세 페이지</router-link>
                 </button>
                 <small class="price text-muted">
-                    {{ lib.getNumberFormatted(item.price)}}원
+                    {{ lib.getNumberFormatted(item.price)}}P
                 </small>
 
                 <small class="real text-danger">
-                    {{ lib.getNumberFormatted(item.price - (item.price * item.discountPer / 100)) }}%
+                    {{ lib.getNumberFormatted(item.price + (item.price * item.discountPer / 100)) }}P
                 </small>
             </div>
         </div>

@@ -24,12 +24,14 @@ export default {
         const state = reactive({
             items:[]
         })
+
         const load = () => {
             axios.get("/api/cart/items").then(({data}) => {
                 console.log(data);
                 state.items = data;
             })
         }
+
         const remove = (itemId)=>{
             axios.delete(`/api/cart/items/${itemId}`).then(()=>{
                 load();

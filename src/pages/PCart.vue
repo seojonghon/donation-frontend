@@ -1,15 +1,26 @@
 <template>
-    <div class="pcart">
+    <div class="orders">
         <div class="container">
-            <ul>
-                <li v-for="(i, idx) in state.pitems" :key="idx">
-                    <img :src="i.imgPath"/>
-                    <span class="name">{{i.name}}</span>
-                    <span class="price">{{ lib.getNumberFormatted(i.price)}}P</span>
-                    <i class="fa fa-trash" @click="remove(i.id)"></i>
-                </li>
-            </ul>
-            <router-link to="/porder" class="btn btn-primary">구매하기</router-link>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>신청자명</th>
+                    <th>주소</th>
+                    <th>포인트</th>
+                    <th>신청항목</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(o, idx1) in state.orders" :key="idx1">
+                    <td>{{ state.orders.length - idx1 }}</td>
+                    <td>{{ o.name }}</td>
+                    <td>{{ o.address }}</td>
+                    <td>{{o.payment }}</td>
+                    <td><div v-for="(i, idx2) in o.items" :key="idx2">{{i.name}}</div></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -22,62 +33,30 @@ import lib from "@/scripts/lib";
 export default {
     setup() {
         const state = reactive({
-            pitems:[]
+            orders: [],
         })
 
-        const load = () => {
-            axios.get("/api/pcart/pitems").then(({data}) => {
-                console.log(data);
-                state.pitems = data;
-            })
-        }
+        axios.get("/api/orders").then(({data})=>{
+            state.orders = [];
 
-        const remove = (itemId)=>{
-            axios.delete(`/api/pcart/pitems/${itemId}`).then(()=>{
-                load();
-            })
-        }
-        load();
+            for(let d of data){
+                if(d.items) {
+                    d.items = JSON.parse(d.items);
+                }
+                state.orders.push(d);
+            }
+        })
 
-        return {state, lib, remove}
+        return {state, lib}
     }
 }
-
 </script>
 <style scoped>
-.pcart ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.table {
+    margin-top: 30px;
 }
 
-.pcart ul li {
-    border: 1px solid #eee;
-    margin-top: 25px;
-    margin-bottom: 25px;
-}
-
-.pcart ul li img {
-    width: 150px;
-    height: 150px;
-}
-.pcart ul li .name {
-    margin-left: 25px;
-}
-.pcart ul li .price {
-    margin-left: 25px;
-}
-.pcart ul li i {
-    float: right;
-    font-size: 20px;
-    margin-top: 65px;
-    margin-right: 50px;
-}
-.pcart .btn {
-    width: 300px;
-    display:block;
-    margin:0 auto;
-    padding:30px 50px;
-    font-size: 20px;
+.table > tbody {
+    border-top: 1px solid #eee;
 }
 </style>
