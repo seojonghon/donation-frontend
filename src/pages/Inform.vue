@@ -6,9 +6,9 @@
                     <img :src="i.imgPath"/>
                     <span class="name">{{i.name}}</span>
                     <span class="content">{{ i.content }}P</span>
-                    <button class="btn btn-primary" @click="remove(i.id)">뒤로 가기</button>
+                    <button class="btn btn-primary" @click="remove(i.id)">삭제하기</button>
+                    <router-link to="/" class="btn btn-primary">홈으로</router-link>
                     <router-link to="/order" class="btn btn-primary">신청하기</router-link>
-                    <!--                    <i class="fa fa-trash" @click="remove(i.id)"></i>-->
                 </li>
             </ul>
         </div>
